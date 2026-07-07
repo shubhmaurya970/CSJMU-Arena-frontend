@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+.hero-image {
+    animation: heroZoom 22s ease-in-out infinite alternate;
+    transform-origin: center center;
+}
+
+@keyframes heroZoom {
+
+    0% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1.14);
+    }
+
+}
