@@ -8,24 +8,22 @@ function Hero() {
 
             {/* Background Image */}
 
-            <img
-                src={heroImage}
-                alt="CSJMU Gate"
-                className="absolute inset-0 h-full w-full object-cover hero-image"
-                style={{
-                    objectPosition: "62% center",
-                }}
-            />
-
+            <div
+    className="fixed top-0 left-0 -z-10 h-screen w-full bg-cover bg-center hero-image"
+    style={{
+        backgroundImage: `url(${heroImage})`,
+        backgroundPosition: "62% center",
+    }}
+></div>
             {/* Dark Overlay */}
 
             <div
-                className="absolute inset-0"
-                style={{
-                    background:
-                        "linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.82) 28%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.12) 82%, rgba(0,0,0,.05) 100%)",
-                }}
-            ></div>
+    className="fixed inset-0 -z-[5]"
+    style={{
+        background:
+            "linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.82) 28%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.12) 82%, rgba(0,0,0,.05) 100%)",
+    }}
+></div>
 
             {/* Bottom Fade */}
 
