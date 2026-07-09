@@ -1,14 +1,21 @@
-import Navbar from "../../components/layout/Navbar";
 import Hero from "./Hero";
+import FeaturedEvents from "./FeaturedEvents";
+import UpcomingEvents from "../../components/UpcomingEvents/UpcomingEvents";
 
 function Home() {
     return (
-        <>
+        <main className="relative">
+
             <Hero />
 
-            {/* Temporary Section */}
-            <section className="h-screen bg-[#F4C542]"></section>
-        </>
+            {/* Overlap */}
+            <div className="-mt-28 relative z-20">
+                <FeaturedEvents />
+            </div>
+
+            <UpcomingEvents />
+
+        </main>
     );
 }
 

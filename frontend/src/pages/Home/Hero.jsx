@@ -3,31 +3,37 @@ import heroImage from "../../assets/images/hero-bg.png";
 import "../../styles/hero.css";
 
 function Hero() {
+
     return (
-        <section className="relative h-screen overflow-hidden">
+
+        <section
+            id="hero"
+            className="relative h-screen "
+        >
 
             {/* Background Image */}
 
             <div
-    className="fixed top-0 left-0 -z-10 h-screen w-full bg-cover bg-center hero-image"
-    style={{
-        backgroundImage: `url(${heroImage})`,
-        backgroundPosition: "62% center",
-    }}
-></div>
+                className="fixed top-0 left-0 -z-10 h-screen w-full bg-cover bg-center hero-image"
+                style={{
+                    backgroundImage: `url(${heroImage})`,
+                    backgroundPosition: "62% center",
+                }}
+
+            ></div>
             {/* Dark Overlay */}
 
             <div
-    className="fixed inset-0 -z-[5]"
-    style={{
-        background:
-            "linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.82) 28%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.12) 82%, rgba(0,0,0,.05) 100%)",
-    }}
-></div>
+                className="fixed inset-0 -z-[5]"
+                style={{
+                    background:
+                        "linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.82) 28%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.12) 82%, rgba(0,0,0,.05) 100%)",
+                }}
+            ></div>
 
             {/* Bottom Fade */}
 
-            <div className="absolute bottom-0 left-0 h-40 w-full bg-gradient-to-t from-black/80 to-transparent"></div>
+            {/* <div className="absolute bottom-0 left-0 h-10 w-full bg-gradient-to-t from-black/40 to-transparent"></div> */}
 
             {/* Navbar */}
 
@@ -82,7 +88,7 @@ function Hero() {
 
             {/* Bottom Glass Panel */}
 
-           
+
 
         </section>
     );

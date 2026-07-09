@@ -3,7 +3,11 @@
 
     position: relative;
     cursor: pointer;
-    color: white;
+    .nav-link{
+    cursor:pointer;
+    position:relative;
+    transition:all .3s ease;
+}
 
     transition: color .3s ease;
 
