@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 function FilterTabs() {
 
     const filters = [
@@ -15,28 +17,48 @@ function FilterTabs() {
 
             {filters.map((item, index) => (
 
-                <button
+                <motion.div
                     key={index}
-                    className={`
-                    rounded-full
-                    border
-                    px-8
-                    py-3
-                    text-[15px]
-                    transition-all
-                    duration-300
-
-                    ${
-                        index === 0
-                            ? "bg-[#F4C542] text-black shadow-[0_0_40px_rgba(244,197,66,.35)]"
-                            : "border-white/10 bg-white/5 text-white/80 backdrop-blur-xl hover:border-[#F4C542] hover:text-[#F4C542]"
-                    }
-                `}
+                    initial={{
+                        opacity: 0,
+                        y: 25,
+                    }}
+                    whileInView={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+                    viewport={{
+                        once: false,
+                        amount: 0.35,
+                    }}
+                    transition={{
+                        duration: 0.6,
+                        delay: index * 0.08,
+                        ease: [0.22, 1, 0.36, 1],
+                    }}
                 >
 
-                    {item}
+                    <button
+                        className={`
+                            rounded-full
+                            border
+                            px-8
+                            py-3
+                            text-[15px]
+                            transition-all
+                            duration-300
 
-                </button>
+                            ${
+                                index === 0
+                                    ? "bg-[#F4C542] text-black shadow-[0_0_40px_rgba(244,197,66,.35)]"
+                                    : "border-white/10 bg-white/5 text-white/80 backdrop-blur-xl hover:border-[#F4C542] hover:text-[#F4C542]"
+                            }
+                        `}
+                    >
+                        {item}
+                    </button>
+
+                </motion.div>
 
             ))}
 
