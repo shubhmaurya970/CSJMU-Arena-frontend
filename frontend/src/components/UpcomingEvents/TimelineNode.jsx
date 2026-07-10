@@ -1,7 +1,20 @@
 import { motion } from "framer-motion";
+function TimelineNode({ eventDate, isHovered }) {
 
-function TimelineNode({ month, day, year }) {
+    const date = new Date(eventDate);
+
+    const day = date.getDate();
+
+    const year = date.getFullYear();
+
+    const month = date
+        .toLocaleString("en-US", {
+            month: "short",
+        })
+        .toUpperCase();
     return (
+
+        
         <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -9,6 +22,7 @@ function TimelineNode({ month, day, year }) {
                 once: false,
                 amount: 0.5,
             }}
+            
             transition={{
                 duration: 0.65,
                 ease: [0.34, 1.56, 0.64, 1],
@@ -19,7 +33,26 @@ function TimelineNode({ month, day, year }) {
             className="relative z-20 flex h-24 w-24 items-center justify-center"
         >
             <motion.div
-                className="relative flex h-24 w-24 flex-col items-center justify-center rounded-full border-2 border-[#F4C542] bg-[#17130F]"
+               className={`
+    relative
+    flex
+    h-24
+    w-24
+    flex-col
+    items-center
+    justify-center
+    rounded-full
+    border-2
+    bg-[#17130F]
+    transition-all
+    duration-500
+
+    ${
+        isHovered
+            ? "border-[#F4C542] shadow-[0_0_45px_rgba(244,197,66,.45)] scale-105"
+            : "border-[#F4C542]/80 shadow-[0_0_25px_rgba(244,197,66,.15)]"
+    }
+`}
                 initial={{
                     boxShadow: "0 0 0 rgba(244,197,66,0)",
                 }}

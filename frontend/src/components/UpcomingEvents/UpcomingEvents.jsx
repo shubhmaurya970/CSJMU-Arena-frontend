@@ -1,8 +1,21 @@
+import { useState } from "react";
+
 import SectionHeader from "./SectionHeader";
 import FilterTabs from "./FilterTabs";
 import Timeline from "./Timeline";
+import events from "./events";
 
 function UpcomingEvents() {
+
+    const [selectedCategory, setSelectedCategory] = useState("ALL");
+
+    const filteredEvents =
+        selectedCategory === "ALL"
+            ? events
+            : events.filter(
+                  (event) => event.category === selectedCategory
+              );
+
     return (
         <section className="relative isolate overflow-hidden py-36">
 
@@ -20,13 +33,18 @@ function UpcomingEvents() {
 
             {/* Content */}
 
-           <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 xl:px-10">
+            <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 xl:px-10">
 
                 <SectionHeader />
 
-                <FilterTabs />
+                <FilterTabs
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+                />
 
-                <Timeline />
+                <Timeline
+                    events={filteredEvents}
+                />
 
             </div>
 
