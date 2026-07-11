@@ -1,6 +1,7 @@
 import Hero from "./Hero";
 import FeaturedEvents from "./FeaturedEvents";
 import UpcomingEvents from "../../components/UpcomingEvents/UpcomingEvents";
+import WhyArena from "../../components/WhyArena/WhyArena";
 
 function Home() {
     return (
@@ -8,12 +9,13 @@ function Home() {
 
             <Hero />
 
-            {/* Overlap */}
-            <div className="-mt-28 relative z-20">
-                <FeaturedEvents />
-            </div>
+            <FeaturedEvents />
 
-            <UpcomingEvents />
+            <div className="bg-[#FFFDF8]">
+    <UpcomingEvents />
+</div>
+
+            <WhyArena />
 
         </main>
     );

@@ -99,7 +99,31 @@ const events = [
         registrationFee: 199,
 
         imageUrl: sportsImage,
-    }
+    },
+
+    {
+        id: 4,
+        slug: "rangreza-2026",
+
+        title: "Cultural Fest 2026",
+
+        description:
+            "Celebrate culture through music, dance and drama.",
+
+        venue: "Open Ground",
+
+        eventDate: "2026-07-25",
+
+        registrationDeadline: "2026-07-23",
+
+        category: "CULTURAL",
+
+        maxParticipants: 2000,
+
+        registrationFee: 0,
+
+        imageUrl: culturalImage,
+    },
 
 ];
 

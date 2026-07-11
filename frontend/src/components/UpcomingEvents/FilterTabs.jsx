@@ -27,7 +27,7 @@ function FilterTabs({ selectedCategory, setSelectedCategory }) {
 
     return (
 
-        <div className="mt-12 flex justify-center gap-5">
+        <div className="flex items-center gap-4">
 
             {filters.map((filter, index) => (
 

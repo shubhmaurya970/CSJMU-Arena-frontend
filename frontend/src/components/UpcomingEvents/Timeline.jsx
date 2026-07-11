@@ -1,9 +1,11 @@
-import { motion } from "framer-motion";
+
 import TimelineItem from "./TimelineItem";
+import events from "./events";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Timeline({ events }) {
     return (
-        <div className="relative mt-24">
+        <div className="relative mt-12">
 
             {/* Center Line */}
 
@@ -26,7 +28,7 @@ function Timeline({ events }) {
                 initial={{ scaleY: 0 }}
                 whileInView={{ scaleY: 1 }}
                 viewport={{
-                    once: true,
+                    once: false,
                     amount: 0.2,
                 }}
                 transition={{
@@ -38,15 +40,43 @@ function Timeline({ events }) {
                 }}
             />
 
-            {events.map((event, index) => (
+           <AnimatePresence mode="popLayout">
 
-                <TimelineItem
-                    key={event.id}
-                    event={event}
-                    isLeft={index % 2 === 1}
-                />
+    {events.map((event, index) => (
 
-            ))}
+        <motion.div
+            key={event.id}
+            layout
+            initial={{
+                opacity: 0,
+                y: 40,
+            }}
+            animate={{
+                opacity: 1,
+                y: 0,
+            }}
+            exit={{
+                opacity: 0,
+                y: -40,
+            }}
+            transition={{
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],
+            }}
+        >
+
+            <TimelineItem
+                event={event}
+                isLeft={index % 2 === 1}
+            />
+
+        </motion.div>
+
+    ))}
+
+</AnimatePresence>
+
+            
 
         </div>
     );

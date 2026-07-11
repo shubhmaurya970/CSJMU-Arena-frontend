@@ -4,58 +4,108 @@ function SectionHeader() {
     return (
         <div className="text-center">
 
-            <motion.p
-                initial={{ opacity: 0, y: 40 }}
+            {/* Top Label */}
+
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{
-    once: false,
-    amount: 0.35,
-}}
+                    once: false,
+                    amount: 0.35,
+                }}
                 transition={{
                     duration: 0.8,
                     ease: [0.22, 1, 0.36, 1],
                 }}
-                className="text-[2.2rem] text-[#F4C542]"
-                style={{
-                    fontFamily: "Kaushan Script, cursive",
-                }}
+                className="flex items-center justify-center gap-6"
             >
-                Campus Life
-            </motion.p>
 
-            <motion.h2
-                initial={{ opacity: 0, y: 40 }}
+                <div className="h-px w-28 bg-[#F4C542]/35" />
+
+                <span
+                    className="
+                        text-sm
+                        font-bold
+                        uppercase
+                        tracking-[10px]
+                        text-[#F4C542]
+                    "
+                >
+                    Upcoming Events
+                </span>
+
+                <div className="h-px w-28 bg-[#F4C542]/35" />
+
+            </motion.div>
+
+            {/* Heading */}
+
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{
-    once: false,
-    amount: 0.35,
-}}
+                    once: false,
+                    amount: 0.35,
+                }}
                 transition={{
                     duration: 0.8,
-                    delay: 0.15,
+                    delay: 0.12,
                     ease: [0.22, 1, 0.36, 1],
                 }}
-                className="mt-2 text-7xl font-extrabold tracking-[-3px] text-white"
+                className="mt-8"
             >
-                Upcoming Events
-            </motion.h2>
+
+                <h2
+                    className="
+                        text-[5.3rem]
+                        font-extrabold
+                        leading-none
+                        tracking-[-4px]
+                        text-white
+                    "
+                >
+                    Stay Ahead.
+                </h2>
+
+                <h2
+                    className="
+                        mt-1
+                        text-[4.5rem]
+                        font-extrabold
+                        leading-none
+                        tracking-[-3px]
+                        text-[#F4C542]
+                    "
+                >
+                    Join the Moment.
+                </h2>
+
+            </motion.div>
+
+            {/* Description */}
 
             <motion.p
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-               viewport={{
-    once: false,
-    amount: 0.35,
-}}
+                viewport={{
+                    once: false,
+                    amount: 0.35,
+                }}
                 transition={{
                     duration: 0.8,
-                    delay: 0.3,
+                    delay: 0.25,
                     ease: [0.22, 1, 0.36, 1],
                 }}
-                className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/60"
+                className="
+                    mx-auto
+                    mt-6
+                    max-w-3xl
+                    text-[1.15rem]
+                    leading-8
+                    text-white/60
+                "
             >
-                From hackathons to cultural festivals,
-                discover everything happening around CSJMU.
+                Explore events, showcase your talent, and build the future together.
             </motion.p>
 
         </div>

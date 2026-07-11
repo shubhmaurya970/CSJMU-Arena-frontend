@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import TimelineNode from "./TimelineNode";
 import UpcomingEventCard from "./UpcomingEventCard";
+import BackgroundPattern from "./BackgroundPattern";
 
 function TimelineItem({ event, isLeft }) {
     const [isHovered, setIsHovered] = useState(false);
@@ -67,6 +68,12 @@ function TimelineItem({ event, isLeft }) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            
+        {isLeft ? (
+    <BackgroundPattern position="right" />
+) : (
+    <BackgroundPattern position="left" />
+)}    
             {/* Background Glow */}
 
             <div
@@ -97,11 +104,12 @@ function TimelineItem({ event, isLeft }) {
                 />
             </div>
 
-            <div className="grid grid-cols-[minmax(0,1fr)_180px_minmax(0,1fr)] items-center py-16">
+            <div className="grid grid-cols-[minmax(0,1fr)_180px_minmax(0,1fr)] items-center py-10">
 
                 {/* LEFT CARD */}
 
                 {isLeft ? (
+                    
                     <div
                         className={`
                             pr-8
@@ -128,6 +136,7 @@ function TimelineItem({ event, isLeft }) {
                     />
 
                     {isLeft ? (
+                        
                         <div className="absolute right-[90px] top-1/2 flex items-center">
 
                             <Dot />
@@ -148,6 +157,7 @@ function TimelineItem({ event, isLeft }) {
                 </div>
 
                 {/* RIGHT CARD */}
+                
 
                 {!isLeft ? (
                     <div
@@ -161,6 +171,8 @@ function TimelineItem({ event, isLeft }) {
                         `}
                     >
                         <UpcomingEventCard event={event} />
+
+                        
                     </div>
                 ) : (
                     <div />
