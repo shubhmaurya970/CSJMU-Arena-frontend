@@ -34,7 +34,7 @@ function UpcomingEvents() {
 
     const visibleEvents = showAllEvents
         ? filteredEvents
-        : filteredEvents.slice(0, 3);
+        : filteredEvents.slice(0, 2);
 
     return (
         <section
@@ -97,7 +97,7 @@ pb-20
 
                 <Timeline events={visibleEvents} />
 
-                {filteredEvents.length > 3 && (
+                {filteredEvents.length > 2 && (
                     <div className="mt-20 flex justify-center">
 
                         <motion.button
