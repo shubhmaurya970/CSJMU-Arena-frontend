@@ -58,7 +58,7 @@ function FooterBottom() {
                         text-white/50
                     "
                 >
-                    <span className="text-[#F4C542]/50">•</span>
+                    <span className="text-[#F4C542]/60">•  </span>
                     Designed & Developed by{" "}
                     <span
                         className="

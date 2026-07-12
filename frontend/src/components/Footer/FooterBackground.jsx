@@ -90,20 +90,17 @@ function FooterBackground() {
 
             <svg
                 className="
-absolute
+                    absolute
+                    right-0
+                    bottom-0
 
-right-0
-bottom-0
+                    w-[520px]
+                    h-[320px]
 
-w-[760px]
-h-[420px]
+                    opacity-20
 
-opacity-15
-
-pointer-events-none
-
-z-[1]
-"
+                    pointer-events-none
+                "
                 viewBox="0 0 520 320"
                 fill="none"
             >
@@ -139,28 +136,7 @@ z-[1]
                     strokeWidth="1"
                 />
             </svg>
-            <img
-    src={gateOutline}
-    alt=""
-    aria-hidden="true"
-    className="
-        absolute
-
-        bottom-0
-        right-10
-
-        w-[540px]
-
-        object-contain
-
-        opacity-[0.08]
-
-        pointer-events-none
-        select-none
-
-        z-[2]
-    "
-/>
+            
 
             {/* Decorative Rings */}
 

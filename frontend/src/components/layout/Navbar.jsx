@@ -1,52 +1,71 @@
 import { useEffect, useState } from "react";
 
 function Navbar() {
-
     const [glass, setGlass] = useState(false);
     const [darkText, setDarkText] = useState(false);
 
-    useEffect(() => {
+    const scrollToSection = (id) => {
+        const section = document.getElementById(id);
 
-        const hero = document.getElementById("hero");
+        if (!section) return;
+
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
+
+    useEffect(() => {
+       const hero = document.getElementById("hero");
+const featured = document.getElementById("featured-events");
+const upcoming = document.getElementById("upcoming-events");
+const whyUs = document.getElementById("why-us");
 
         const handleScroll = () => {
+    setGlass(window.scrollY > 20);
 
-            // Glass navbar after a little scroll
-            setGlass(window.scrollY > 20);
+    const featuredTop = featured?.getBoundingClientRect().top ?? Infinity;
+    const upcomingTop = upcoming?.getBoundingClientRect().top ?? Infinity;
+    const whyUsTop = whyUs?.getBoundingClientRect().top ?? Infinity;
 
-            // Black text only after hero section ends
-            if (hero) {
+    // Hero → White
+    if (featuredTop > 120) {
+        setDarkText(false);
+        return;
+    }
 
-                const heroBottom = hero.getBoundingClientRect().bottom;
+    // Featured → Black
+    if (featuredTop <= 120 && upcomingTop > 120) {
+        setDarkText(true);
+        return;
+    }
 
-                setDarkText(heroBottom <= 80);
+    // Upcoming → White
+    if (upcomingTop <= 120 && whyUsTop > 120) {
+        setDarkText(false);
+        return;
+    }
 
-            }
-
-        };
+    // Why Us + Footer → Black
+    setDarkText(true);
+};
 
         window.addEventListener("scroll", handleScroll);
 
         handleScroll();
 
         return () => {
-
             window.removeEventListener("scroll", handleScroll);
-
         };
-
     }, []);
 
     return (
-
         <nav
             className={`fixed left-0 w-full z-50 transition-all duration-500 ${
                 glass ? "top-5" : "top-10"
             }`}
         >
-
             <div className="mx-auto max-w-[1700px] px-8">
-
                 <div
                     className={`flex items-center justify-between rounded-full px-10 transition-all duration-500 ${
                         glass
@@ -54,10 +73,10 @@ function Navbar() {
                             : "h-16 bg-transparent"
                     }`}
                 >
-
                     {/* Logo */}
 
                     <h1
+                        onClick={() => scrollToSection("hero")}
                         className={`cursor-pointer text-xl font-bold tracking-tight transition-colors duration-500 ${
                             darkText ? "text-black" : "text-white"
                         }`}
@@ -68,25 +87,67 @@ function Navbar() {
                     {/* Navigation */}
 
                     <ul
-                        className={`flex items-center gap-10 text-sm font-medium transition-colors duration-500 ${
-                            darkText ? "text-black" : "text-white"
-                        }`}
+                        className={`
+        absolute
+        left-1/2
+        -translate-x-1/2
+
+        flex
+        items-center
+        gap-10
+
+        text-sm
+        font-medium
+        transition-colors
+        duration-500
+
+        ${darkText ? "text-black" : "text-white"}
+    `}
                     >
+                        <li>
+                            <button
+                                onClick={() => scrollToSection("hero")}
+                                className="transition-colors duration-300 hover:text-[#F4C542]"
+                            >
+                                Home
+                            </button>
+                        </li>
 
-                        <li className="nav-link">Events</li>
+                        <li>
+                            <button
+                                onClick={() =>
+                                    scrollToSection("featured-events")
+                                }
+                                className="transition-colors duration-300 hover:text-[#F4C542]"
+                            >
+                                Events
+                            </button>
+                        </li>
 
-                        <li className="nav-link">Categories</li>
+                        <li>
+                            <button
+                                onClick={() =>
+                                    scrollToSection("upcoming-events")
+                                }
+                                className="transition-colors duration-300 hover:text-[#F4C542]"
+                            >
+                                Upcoming
+                            </button>
+                        </li>
 
-                        <li className="nav-link">Organizers</li>
-
-                        <li className="nav-link">Community</li>
-
+                        <li>
+                            <button
+                                onClick={() => scrollToSection("why-us")}
+                                className="transition-colors duration-300 hover:text-[#F4C542]"
+                            >
+                                Why Us
+                            </button>
+                        </li>
                     </ul>
 
                     {/* Buttons */}
 
                     <div className="flex items-center gap-4">
-
                         <button
                             className={`transition-colors duration-500 ${
                                 darkText
@@ -100,15 +161,10 @@ function Navbar() {
                         <button className="rounded-full bg-[#F4C542] px-6 py-2 font-semibold text-black transition-all duration-300 hover:scale-105">
                             Become Organizer
                         </button>
-
                     </div>
-
                 </div>
-
             </div>
-
         </nav>
-
     );
 }
 

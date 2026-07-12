@@ -6,22 +6,33 @@ import Footer from "../../components/Footer/Footer";
 
 function Home() {
     return (
-        <main className="relative  ">
+        <main className="relative">
 
-            <Hero />
+            <section id="hero">
+                <Hero />
+            </section>
 
-            <FeaturedEvents />
+            <section id="featured-events">
+                <FeaturedEvents />
+            </section>
 
-            <div className="bg-[#FFFDF8]">
-    <UpcomingEvents />
-</div>
-        <div className="bg-[#0F0C09]">
-            <WhyArena />
-        </div>
-            <div className="bg-[#EFE9DC]">
+            <section
+                id="upcoming-events"
+                className="bg-[#FFFDF8]"
+            >
+                <UpcomingEvents />
+            </section>
+
+            <section
+                id="why-us"
+                className="bg-[#0F0C09]"
+            >
+                <WhyArena />
+            </section>
+
+            <footer className="bg-[#EFE9DC]">
                 <Footer />
-            </div>
-            
+            </footer>
 
         </main>
     );

@@ -1,55 +1,10 @@
 @import "tailwindcss";
+
 .nav-link {
-
-    position: relative;
     cursor: pointer;
-
-    .nav-link{
-        cursor:pointer;
-        position:relative;
-        transition:all .3s ease;
-    }
-
-    transition: color .3s ease;
-
+    transition: color 0.3s ease;
 }
 
-.nav-link::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:0%;
-    bottom:-8px;
-
-    width:0;
-    height:2px;
-
-    background:linear-gradient(
-90deg,
-transparent,
-#F4C542,
-transparent
-);
-
-    border-radius:999px;
-
-    transform:translateX(-50%);
-
-    transition:
-width .35s cubic-bezier(.19,1,.22,1);
-
-}
-
-.nav-link:hover{
-
-    color:#F4C542;
-
-}
-
-.nav-link:hover::after{
-
-    width:100%;
-
+.nav-link:hover {
+    color: #F4C542;
 }
