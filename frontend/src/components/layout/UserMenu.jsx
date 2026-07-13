@@ -6,20 +6,26 @@ import {
     Ticket,
     Settings,
     LogOut,
-    
-} from "lucide-react";
-import {
-    ChevronDown,
-    ChevronUp,
 } from "lucide-react";
 
 import { AuthContext } from "../../context/AuthContext";
 
 function UserMenu() {
 
+    const roleColors = {
+    STUDENT:
+        "bg-[#F4C542]/15 text-[#F4C542]",
+
+    ORGANIZER:
+        "bg-emerald-500/15 text-emerald-400",
+
+    ADMIN:
+        "bg-red-500/15 text-red-400",
+};
+
     const navigate = useNavigate();
 
-    const { logout } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -55,37 +61,23 @@ function UserMenu() {
             ref={dropdownRef}
             className="relative"
         >
-            console.log("UserMenu Render");
 
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="flex items-center gap-3 rounded-full px-4 py-2 text-white transition-all duration-300 hover:bg-white/10"
             >
 
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4C542] font-semibold text-black">
-                    S
-                </div>
+               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4C542] font-semibold text-black">
+    {user?.name?.charAt(0).toUpperCase()}
+</div>
 
-                <span className="font-medium">
-                    Shubh
+<span className="font-medium">
+    {user?.name}
+</span>
+
+                <span className="text-xs">
+                    ▼
                 </span>
-
-               <motion.div
-    initial={false}
-    animate={{
-        opacity: 1,
-        scale: 1,
-    }}
-    transition={{
-        duration: 0.15,
-    }}
->
-    {isMenuOpen ? (
-        <ChevronDown size={18} />
-    ) : (
-        <ChevronDown size={18} />
-    )}
-</motion.div>
 
             </button>
 
@@ -164,7 +156,7 @@ function UserMenu() {
                 text-black
             "
         >
-            S
+            {user?.name?.charAt(0).toUpperCase()}
         </div>
 
         {/* User Info */}
@@ -172,34 +164,30 @@ function UserMenu() {
         <div className="flex-1">
 
             <h3 className="text-lg font-semibold text-white">
-                Shubh Maurya
+                {user?.name}
             </h3>
 
             <div className="mt-2 flex items-center gap-2">
 
-                <span
-                    className="
-                        rounded-full
+               <span
+    className={`
+        rounded-full
+        px-3
+        py-1
+        text-[10px]
+        font-semibold
+        tracking-[2px]
 
-                        bg-[#F4C542]/15
-
-                        px-3
-                        py-1
-
-                        text-[10px]
-                        font-semibold
-                        tracking-[2px]
-
-                        text-[#F4C542]
-                    "
-                >
-                    STUDENT
-                </span>
+        ${roleColors[user?.role]}
+    `}
+>
+    {user?.role}
+</span>
 
             </div>
 
             <p className="mt-3 text-sm text-white/45">
-                shubh@gmail.com
+                {user?.email}
             </p>
 
         </div>

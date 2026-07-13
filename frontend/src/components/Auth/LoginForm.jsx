@@ -9,13 +9,15 @@ function LoginForm() {
 
     const navigate = useNavigate();
 
-   const { login } = useContext(AuthContext);
+    
+
+    const { login } = useContext(AuthContext);
 
     const [showPassword, setShowPassword] = useState(false);
 
-    
+
     const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleLogin = async () => {
     try {
@@ -24,16 +26,19 @@ const [password, setPassword] = useState("");
             email,
             password,
         });
-login(response.data.token);
 
-navigate("/");
+        console.log(response);
+
+        login(response.data);
+
+        navigate("/");
 
     } catch (error) {
 
         console.error(error);
 
     }
-}
+};
 
 
     return (
@@ -106,8 +111,8 @@ navigate("/");
                     {/* Email */}
 
                     <input
-                     value={email}
-onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         placeholder="Email Address"
                         className="
@@ -140,13 +145,13 @@ onChange={(e) => setEmail(e.target.value)}
 
                     <div className="relative">
 
-    <input
-   
-value={password}
-onChange={(e) => setPassword(e.target.value)}
-        type={showPassword ? "text" : "password"}
-        placeholder="Password"
-        className="
+                        <input
+
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            className="
             w-full
 
             rounded-2xl
@@ -171,12 +176,12 @@ onChange={(e) => setPassword(e.target.value)}
             focus:border-[#F4C542]
             focus:shadow-[0_0_18px_rgba(244,197,66,.18)]
         "
-    />
+                        />
 
-    <button
-        type="button"
-        onClick={() => setShowPassword(!showPassword)}
-        className="
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="
             absolute
 
             right-5
@@ -191,15 +196,15 @@ onChange={(e) => setPassword(e.target.value)}
 
             hover:text-[#F4C542]
         "
-    >
-        {showPassword ? (
-            <EyeOff size={20} />
-        ) : (
-            <Eye size={20} />
-        )}
-    </button>
+                        >
+                            {showPassword ? (
+                                <EyeOff size={20} />
+                            ) : (
+                                <Eye size={20} />
+                            )}
+                        </button>
 
-</div>
+                    </div>
 
                     {/* Remember */}
 
@@ -261,17 +266,17 @@ onChange={(e) => setPassword(e.target.value)}
                         "
                     >
                         Login
-                        
+
                     </motion.button>
                     <div className="mt-1 text-center">
 
-    <span className="text-white/60">
-        Don't have an account?
-    </span>
+                        <span className="text-white/60">
+                            Don't have an account?
+                        </span>
 
-    <Link
-        to="/register"
-        className="
+                        <Link
+                            to="/register"
+                            className="
             ml-2
 
             font-semibold
@@ -284,11 +289,11 @@ onChange={(e) => setPassword(e.target.value)}
             hover:text-white
             hover:underline
         "
-    >
-        Create Account →
-    </Link>
+                        >
+                            Create Account →
+                        </Link>
 
-</div>
+                    </div>
 
                 </div>
             </div>

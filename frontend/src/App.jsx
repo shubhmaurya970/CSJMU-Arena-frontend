@@ -9,6 +9,7 @@ import About from "./pages/About/About";
 import Organizer from "./pages/Organizer/Organizer";
 import Admin from "./pages/Admin/Admin";
 import EventDetails from "./pages/EventDetails/EventDetails";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
 
@@ -31,10 +32,22 @@ function App() {
 
                 <Route path="/about" element={<About />} />
 
-                <Route path="/organizer" element={<Organizer />} />
-
-                <Route path="/admin" element={<Admin />} />
-
+                <Route
+    path="/organizer"
+    element={
+        <ProtectedRoute>
+            <Organizer />
+        </ProtectedRoute>
+    }
+/>
+                <Route
+    path="/admin"
+    element={
+        <ProtectedRoute>
+            <Admin />
+        </ProtectedRoute>
+    }
+/>
                 <Route path="/event/:id" element={<EventDetails />} />
             </Routes>
         </>
