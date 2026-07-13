@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/authService";
+import { AuthContext } from "../../context/AuthContext";
 
 function LoginForm() {
+
+    const navigate = useNavigate();
+
+   const { login } = useContext(AuthContext);
+
     const [showPassword, setShowPassword] = useState(false);
+
+    
     const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 
@@ -16,15 +24,17 @@ const [password, setPassword] = useState("");
             email,
             password,
         });
+login(response.data.token);
 
-        console.log(response);
+navigate("/");
 
     } catch (error) {
 
         console.error(error);
 
     }
-};
+}
+
 
     return (
         <motion.div
@@ -284,6 +294,6 @@ onChange={(e) => setPassword(e.target.value)}
             </div>
         </motion.div>
     );
-}
 
+}
 export default LoginForm;

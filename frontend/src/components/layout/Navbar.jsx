@@ -1,8 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { AuthContext } from "../../context/AuthContext";
+import UserMenu from "./UserMenu";
 
 function Navbar() {
+    const { isLoggedIn } = useContext(AuthContext);
+
     const [glass, setGlass] = useState(false);
     const [darkText, setDarkText] = useState(false);
+
+    const navigate = useNavigate();
 
     const scrollToSection = (id) => {
         const section = document.getElementById(id);
@@ -16,39 +24,39 @@ function Navbar() {
     };
 
     useEffect(() => {
-       const hero = document.getElementById("hero");
-const featured = document.getElementById("featured-events");
-const upcoming = document.getElementById("upcoming-events");
-const whyUs = document.getElementById("why-us");
+        const featured = document.getElementById("featured-events");
+        const upcoming = document.getElementById("upcoming-events");
+        const whyUs = document.getElementById("why-us");
 
         const handleScroll = () => {
-    setGlass(window.scrollY > 20);
+            setGlass(window.scrollY > 20);
 
-    const featuredTop = featured?.getBoundingClientRect().top ?? Infinity;
-    const upcomingTop = upcoming?.getBoundingClientRect().top ?? Infinity;
-    const whyUsTop = whyUs?.getBoundingClientRect().top ?? Infinity;
+            const featuredTop =
+                featured?.getBoundingClientRect().top ?? Infinity;
 
-    // Hero → White
-    if (featuredTop > 120) {
-        setDarkText(false);
-        return;
-    }
+            const upcomingTop =
+                upcoming?.getBoundingClientRect().top ?? Infinity;
 
-    // Featured → Black
-    if (featuredTop <= 120 && upcomingTop > 120) {
-        setDarkText(true);
-        return;
-    }
+            const whyUsTop =
+                whyUs?.getBoundingClientRect().top ?? Infinity;
 
-    // Upcoming → White
-    if (upcomingTop <= 120 && whyUsTop > 120) {
-        setDarkText(false);
-        return;
-    }
+            if (featuredTop > 120) {
+                setDarkText(false);
+                return;
+            }
 
-    // Why Us + Footer → Black
-    setDarkText(true);
-};
+            if (featuredTop <= 120 && upcomingTop > 120) {
+                setDarkText(true);
+                return;
+            }
+
+            if (upcomingTop <= 120 && whyUsTop > 120) {
+                setDarkText(false);
+                return;
+            }
+
+            setDarkText(true);
+        };
 
         window.addEventListener("scroll", handleScroll);
 
@@ -69,7 +77,7 @@ const whyUs = document.getElementById("why-us");
                 <div
                     className={`flex items-center justify-between rounded-full px-10 transition-all duration-500 ${
                         glass
-                            ? "h-14 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl"
+                            ? "h-14 border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl"
                             : "h-16 bg-transparent"
                     }`}
                 >
@@ -87,22 +95,9 @@ const whyUs = document.getElementById("why-us");
                     {/* Navigation */}
 
                     <ul
-                        className={`
-        absolute
-        left-1/2
-        -translate-x-1/2
-
-        flex
-        items-center
-        gap-10
-
-        text-sm
-        font-medium
-        transition-colors
-        duration-500
-
-        ${darkText ? "text-black" : "text-white"}
-    `}
+                        className={`absolute left-1/2 flex -translate-x-1/2 items-center gap-10 text-sm font-medium transition-colors duration-500 ${
+                            darkText ? "text-black" : "text-white"
+                        }`}
                     >
                         <li>
                             <button
@@ -145,22 +140,32 @@ const whyUs = document.getElementById("why-us");
                         </li>
                     </ul>
 
-                    {/* Buttons */}
+                    {/* Right Side */}
 
-                    <div className="flex items-center gap-4">
-                        <button
-                            className={`transition-colors duration-500 ${
-                                darkText
-                                    ? "text-black hover:text-[#F4C542]"
-                                    : "text-white hover:text-[#F4C542]"
-                            }`}
-                        >
-                            Login
-                        </button>
+                    <div className="flex items-center gap-5">
+                        {!isLoggedIn ? (
+                            <>
+                                <button
+                                    onClick={() => navigate("/login")}
+                                    className={`transition-colors duration-300 ${
+                                        darkText
+                                            ? "text-black hover:text-[#F4C542]"
+                                            : "text-white hover:text-[#F4C542]"
+                                    }`}
+                                >
+                                    Login
+                                </button>
 
-                        <button className="rounded-full bg-[#F4C542] px-6 py-2 font-semibold text-black transition-all duration-300 hover:scale-105">
-                            Become Organizer
-                        </button>
+                                <button
+                                    onClick={() => navigate("/register")}
+                                    className="rounded-full bg-[#F4C542] px-6 py-2 font-semibold text-black transition-all duration-300 hover:scale-105"
+                                >
+                                    Become Organizer
+                                </button>
+                            </>
+                        ) : (
+                            <UserMenu />
+                        )}
                     </div>
                 </div>
             </div>
