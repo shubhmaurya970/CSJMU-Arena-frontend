@@ -2,6 +2,8 @@ import Navbar from "./components/layout/Navbar";
 import Home from "./pages/Home/Home";
 import { useEffect, useState } from "react";
 import PageLoader from "./components/loading/PageLoader";
+import { useLoading } from "./context/LoadingContext";
+
 
 import { Routes, Route, useLocation } from "react-router-dom";
 
@@ -15,6 +17,8 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 
 function App() {
+
+    const { isLoading } = useLoading();
     const [showSplash, setShowSplash] = useState(true);
 
 useEffect(() => {
@@ -41,11 +45,13 @@ useEffect(() => {
 
 }
 
+
     return (
         
         
-        <>
         
+        <>
+            {isLoading && <PageLoader />}
             {!hideNavbar && <Navbar />}
 
             <Routes>

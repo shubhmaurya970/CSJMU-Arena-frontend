@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 import UserMenu from "./UserMenu";
+import { useLoading } from "../../context/LoadingContext";
 
 function Navbar() {
     const { isLoggedIn } = useContext(AuthContext);
@@ -11,6 +12,7 @@ function Navbar() {
     const [darkText, setDarkText] = useState(false);
 
     const navigate = useNavigate();
+    const { showLoader, hideLoader } = useLoading();
 
     const scrollToSection = (id) => {
         const section = document.getElementById(id);
@@ -22,7 +24,17 @@ function Navbar() {
             block: "start",
         });
     };
+const handleNavigation = (path) => {
 
+    showLoader("Opening page...");
+
+    setTimeout(() => {
+
+        navigate(path);
+
+    }, 800);
+
+};
     useEffect(() => {
         const featured = document.getElementById("featured-events");
         const upcoming = document.getElementById("upcoming-events");
@@ -146,7 +158,7 @@ function Navbar() {
                         {!isLoggedIn ? (
                             <>
                                 <button
-                                    onClick={() => navigate("/login")}
+                                    onClick={() => handleNavigation("/login")}
                                     className={`transition-colors duration-300 ${
                                         darkText
                                             ? "text-black hover:text-[#F4C542]"
@@ -157,7 +169,7 @@ function Navbar() {
                                 </button>
 
                                 <button
-                                    onClick={() => navigate("/register")}
+                                    onClick={() => handleNavigation("/register")}
                                     className="rounded-full bg-[#F4C542] px-6 py-2 font-semibold text-black transition-all duration-300 hover:scale-105"
                                 >
                                     Become Organizer
