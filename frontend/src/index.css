@@ -8,3 +8,13 @@
 .nav-link:hover {
     color: #F4C542;
 }
+
+/* Hide Scrollbar */
+
+.hide-scrollbar::-webkit-scrollbar {
+    width: 0;
+}
+
+.hide-scrollbar {
+    scrollbar-width: none;
+}

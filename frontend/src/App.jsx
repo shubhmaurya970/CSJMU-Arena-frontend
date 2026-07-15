@@ -1,5 +1,7 @@
 import Navbar from "./components/layout/Navbar";
 import Home from "./pages/Home/Home";
+import { useEffect, useState } from "react";
+import PageLoader from "./components/loading/PageLoader";
 
 import { Routes, Route, useLocation } from "react-router-dom";
 
@@ -11,7 +13,21 @@ import Admin from "./pages/Admin/Admin";
 import EventDetails from "./pages/EventDetails/EventDetails";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
+
 function App() {
+    const [showSplash, setShowSplash] = useState(true);
+
+useEffect(() => {
+
+    const timer = setTimeout(() => {
+
+        setShowSplash(false);
+
+    }, 1200);
+
+    return () => clearTimeout(timer);
+
+}, []);
 
     const location = useLocation();
 
@@ -19,8 +35,17 @@ function App() {
         location.pathname === "/login" ||
         location.pathname === "/register";
 
+        if (showSplash) {
+
+    return <PageLoader />;
+
+}
+
     return (
+        
+        
         <>
+        
             {!hideNavbar && <Navbar />}
 
             <Routes>
