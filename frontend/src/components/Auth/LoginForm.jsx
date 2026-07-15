@@ -4,22 +4,25 @@ import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/authService";
 import { AuthContext } from "../../context/AuthContext";
+import { useLoading } from "../../context/LoadingContext";
 
 function LoginForm() {
 
-    const navigate = useNavigate();
-
-    
-
+    const navigate = useNavigate();  
+    const {
+    showLoader,
+    hideLoaderAfter,
+} = useLoading();  
     const { login } = useContext(AuthContext);
-
     const [showPassword, setShowPassword] = useState(false);
-
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const [error, setError] = useState("");
     const handleLogin = async () => {
+        setError("");
+
+    showLoader("Verifying credentials...");
+
     try {
 
         const response = await loginUser({
@@ -27,17 +30,36 @@ function LoginForm() {
             password,
         });
 
-        console.log(response);
-
         login(response.data);
 
         navigate("/");
 
+        hideLoaderAfter();
+
     } catch (error) {
 
-        console.error(error);
+    hideLoaderAfter();
+
+    if (error.response?.status === 401) {
+
+        setError("Invalid email or password.");
 
     }
+
+    else if (!error.response) {
+
+        setError("Unable to connect. Check your internet connection.");
+
+    }
+
+    else {
+
+        setError("Something went wrong. Please try again.");
+
+    }
+
+}
+
 };
 
 
@@ -236,6 +258,24 @@ function LoginForm() {
                     </div>
 
                     {/* Login Button */}
+                    {error && (
+
+    <div
+        className="
+            rounded-xl
+            border
+            border-red-500/30
+            bg-red-500/10
+            px-4
+            py-3
+            text-sm
+            text-red-300
+        "
+    >
+        {error}
+    </div>
+
+)}
 
                     <motion.button
                         onClick={handleLogin}
