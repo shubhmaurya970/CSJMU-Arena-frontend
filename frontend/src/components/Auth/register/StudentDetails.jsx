@@ -9,6 +9,7 @@ function StudentDetails() {
 const [course, setCourse] = useState("");
 const [year, setYear] = useState("");
 
+
     return (
 
         <div>
@@ -16,23 +17,50 @@ const [year, setYear] = useState("");
             <div className="mb-8">
 
                 <h2
-                    className="
-                        text-xl
-                        font-semibold
-                        text-white
-                    "
-                >
-                    Academic Information
-                </h2>
+    className="
+        text-xl
+        font-semibold
+        text-white
+    "
+>
+    Complete Your Profile
+
+    <span
+        className="
+            ml-3
+
+            rounded-full
+
+            border
+            border-[#F4C542]/25
+
+            bg-[#F4C542]/10
+
+            px-3
+            py-1
+
+            text-xs
+            font-medium
+
+            text-[#F4C542]
+        "
+    >
+        OPTIONAL
+    </span>
+
+</h2>
 
                 <p
-                    className="
-                        mt-2
-                        text-white/45
-                    "
-                >
-                    Tell us about your academic details.
-                </p>
+    className="
+        mt-2
+        max-w-2xl
+        text-white/45
+        leading-7
+    "
+>
+    Complete your profile now or later from your dashboard.
+    A completed profile is required to register for events or host events.
+</p>
 
             </div>
 
@@ -42,8 +70,8 @@ const [year, setYear] = useState("");
     label="Branch"
     placeholder={
         department
-            ? "Select Branch"
-            : "Select Department First"
+            ? "Select Department"
+            : "Select Branch "
     }
 
     value={branch}

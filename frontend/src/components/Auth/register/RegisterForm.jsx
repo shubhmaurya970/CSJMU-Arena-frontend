@@ -1,236 +1,168 @@
-import TextField from "../../common/TextField";
-import StudentDetails from "./StudentDetails";
-import OrganizerDetails from "./OrganizerDetails";
-
-import {
-    User,
-    Mail,
-    Lock,
-} from "lucide-react";
+import { useState } from "react";
+import RegisterHeader from "./sections/RegisterHeader";
+import RegisterFields from "./sections/RegisterFields";
+import GoogleSignIn from "./sections/GoogleSignIn";
+import ProfileAccordion from "./sections/ProfileAccordion";
+import RegisterFooter from "./sections/RegisterFooter";
+import { registerUser } from "../../../services/authService";
+import { useLoading } from "../../../context/LoadingContext";
+import { useNavigate } from "react-router-dom";
 
 function RegisterForm({ accountType }) {
-    return (
-      <div
-    className="
-        flex-1
+    const navigate = useNavigate();
 
-        overflow-y-auto
+const {
+    showLoader,
+    hideLoaderAfter,
+} = useLoading();
 
-        bg-[#111111]
+    const [name, setName] = useState("");
 
-        px-14
-        py-12
+const [email, setEmail] = useState("");
 
-        pr-6
+const [password, setPassword] = useState("");
 
-        hide-scrollbar
-    "
->
-            {/* Heading */}
+const [confirmPassword, setConfirmPassword] = useState("");
 
-            <div>
+const [error, setError] = useState("");
 
-                <p
-                    className="
-                        text-sm
+const handleRegister = async () => {
 
-                        uppercase
+    setError("");
 
-                        tracking-[5px]
+    if (
 
-                        text-[#F4C542]
-                    "
-                >
-                    Create Account
-                </p>
+        !name.trim() ||
 
-                <h1
-                    className="
-                        mt-3
+        !email.trim() ||
 
-                        text-4xl
+        !password.trim()
 
-                        font-bold
+    ) {
 
-                        text-white
-                    "
-                >
-                    Welcome to CSJMU ARENA
-                </h1>
+        setError("Please fill all required fields.");
 
-                <p
-                    className="
-                        mt-4
+        return;
 
-                        max-w-xl
-
-                        text-white/55
-                    "
-                >
-                    Complete your registration to become a part of the CSJMU ARENA community.
-                </p>
-
-            </div>
-
-            {/* Form */}
-
-            <div className="mt-12 grid grid-cols-2 gap-6">
-
-                <TextField
-                label="Full Name"
-                icon={<User size={18} />}
-                    placeholder="Enter your full name"
-                />
-
-                <TextField
-                    label="Email Address"
-                    icon={<Mail size={18} />}
-                    placeholder="Enter your email"
-                />
-
-                <TextField
-                    label="Password"
-                    type="password"
-                    icon={<Lock size={18} />}
-                    placeholder="Create password"
-                />
-
-
-                <TextField
-                    label="Confirm Password"
-                    icon={<Lock size={18} />}
-                    type="password"
-                    placeholder="Confirm password"
-                />
-                <div className="mt-12">
-
-
-                </div>
-
-            </div>
-               {accountType === "STUDENT"
-        ? <StudentDetails />
-        : <OrganizerDetails />
     }
-    <div className="mt-10">
 
-    <label
-        className="
-            flex
-            items-start
-            gap-3
+    if (password !== confirmPassword) {
 
-            cursor-pointer
+        setError("Passwords do not match.");
 
-            text-sm
+        return;
 
-            text-white/65
-        "
-    >
+    }
 
-        <input
-            type="checkbox"
+    try {
+
+       showLoader("Creating your account...");
+
+await registerUser({
+
+    fullName: name,
+
+    email,
+
+    password,
+
+    role: accountType,
+
+});
+
+hideLoaderAfter();
+
+navigate("/login", {
+    state: {
+        success:
+            "Account created successfully. Please sign in.",
+    },
+});
+
+    }
+
+    catch (error) {
+
+        hideLoaderAfter();
+
+        if (error.response?.status === 409) {
+
+            setError("Email already exists.");
+
+        }
+
+        else if (!error.response) {
+
+            setError(
+                "Unable to connect. Check your internet connection."
+            );
+
+        }
+
+        else {
+
+            setError(
+                "Registration failed. Please try again."
+            );
+
+        }
+
+    }
+
+};
+
+    return (
+
+        <div
             className="
-                mt-1
+                flex-1
 
-                h-4
-                w-4
+                overflow-y-auto
 
-                accent-[#F4C542]
+                bg-[#111111]
+
+                px-14
+                py-12
+                pr-6
+
+                hide-scrollbar
             "
-        />
+        >
 
-        <span>
+            <RegisterHeader />
 
-            I agree to the{" "}
+            <RegisterFields
+    name={name}
+    setName={setName}
 
-            <button
-                type="button"
-                className="
-                    text-[#F4C542]
+    email={email}
+    setEmail={setEmail}
 
-                    hover:underline
-                "
-            >
-                Terms & Conditions
-            </button>
+    password={password}
+    setPassword={setPassword}
 
-            {" "}and{" "}
+    confirmPassword={confirmPassword}
+    setConfirmPassword={setConfirmPassword}
+/>
 
-            <button
-                type="button"
-                className="
-                    text-[#F4C542]
+            <GoogleSignIn />
 
-                    hover:underline
-                "
-            >
-                Privacy Policy
-            </button>
+            <ProfileAccordion
+                accountType={accountType}
+            />
 
-        </span>
+            <RegisterFooter
 
-    </label>
+    onRegister={handleRegister}
 
-</div>
-<div className="mt-8">
+    error={error}
 
-    <button
-        className="
-            h-14
-            w-full
-
-            rounded-2xl
-
-            bg-[#F4C542]
-
-            font-semibold
-
-            text-black
-
-            transition-all
-            duration-300
-
-            hover:scale-[1.02]
-
-            hover:shadow-[0_0_30px_rgba(244,197,66,.25)]
-        "
-    >
-        Create Account
-    </button>
-
-<div
-    className="
-        mt-8
-
-        text-center
-
-        text-white/55
-    "
->
-
-    Already have an account?
-
-    <button
-        className="
-            ml-2
-
-            font-medium
-
-            text-[#F4C542]
-
-            hover:underline
-        "
-    >
-        Sign In
-    </button>
-
-</div>
-</div>
-
+/>
 
         </div>
+
     );
+
 }
 
 export default RegisterForm;

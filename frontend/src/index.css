@@ -18,3 +18,21 @@
 .hide-scrollbar {
     scrollbar-width: none;
 }
+/* Register Form Scrollbar */
+
+.register-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.register-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.register-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(244, 197, 66, 0.7);
+    border-radius: 999px;
+}
+
+.register-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(244, 197, 66, 1);
+}
