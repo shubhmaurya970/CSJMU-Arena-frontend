@@ -13,15 +13,15 @@ import { AuthContext } from "../../context/AuthContext";
 function UserMenu() {
 
     const roleColors = {
-    STUDENT:
-        "bg-[#F4C542]/15 text-[#F4C542]",
+        STUDENT:
+            "bg-[#F4C542]/15 text-[#F4C542]",
 
-    ORGANIZER:
-        "bg-emerald-500/15 text-emerald-400",
+        ORGANIZER:
+            "bg-emerald-500/15 text-emerald-400",
 
-    ADMIN:
-        "bg-red-500/15 text-red-400",
-};
+        ADMIN:
+            "bg-red-500/15 text-red-400",
+    };
 
     const navigate = useNavigate();
 
@@ -67,13 +67,13 @@ function UserMenu() {
                 className="flex items-center gap-3 rounded-full px-4 py-2 text-white transition-all duration-300 hover:bg-white/10"
             >
 
-               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4C542] font-semibold text-black">
-    {user?.name?.charAt(0).toUpperCase()}
-</div>
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4C542] font-semibold text-black">
+                    {user?.name?.charAt(0).toUpperCase()}
+                </div>
 
-<span className="font-medium">
-    {user?.name}
-</span>
+                <span className="font-medium">
+                    {user?.name}
+                </span>
 
                 <span className="text-xs">
                     ▼
@@ -134,12 +134,12 @@ function UserMenu() {
 
                         <div className="border-b border-white/10 p-6">
 
-    <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4">
 
-        {/* Avatar */}
+                                {/* Avatar */}
 
-        <div
-            className="
+                                <div
+                                    className="
                 flex
                 h-14
                 w-14
@@ -155,22 +155,22 @@ function UserMenu() {
 
                 text-black
             "
-        >
-            {user?.name?.charAt(0).toUpperCase()}
-        </div>
+                                >
+                                    {user?.name?.charAt(0).toUpperCase()}
+                                </div>
 
-        {/* User Info */}
+                                {/* User Info */}
 
-        <div className="flex-1">
+                                <div className="flex-1">
 
-            <h3 className="text-lg font-semibold text-white">
-                {user?.name}
-            </h3>
+                                    <h3 className="text-lg font-semibold text-white">
+                                        {user?.name}
+                                    </h3>
 
-            <div className="mt-2 flex items-center gap-2">
+                                    <div className="mt-2 flex items-center gap-2">
 
-               <span
-    className={`
+                                        <span
+                                            className={`
         rounded-full
         px-3
         py-1
@@ -180,25 +180,25 @@ function UserMenu() {
 
         ${roleColors[user?.role]}
     `}
->
-    {user?.role}
-</span>
+                                        >
+                                            {user?.role}
+                                        </span>
 
-            </div>
+                                    </div>
 
-            <p className="mt-3 text-sm text-white/45">
-                {user?.email}
-            </p>
+                                    <p className="mt-3 text-sm text-white/45">
+                                        {user?.email}
+                                    </p>
 
-        </div>
+                                </div>
 
-    </div>
+                            </div>
 
-</div>
-<div className="p-2">
+                        </div>
+                        <div className="p-2">
 
-    <button
-        className="
+                            <button
+                                className="
             flex
             w-full
             items-center
@@ -216,15 +216,15 @@ function UserMenu() {
 
             hover:bg-white/8
         "
-    >
-        <User size={18} />
+                            >
+                                <User size={18} />
 
-        <span>My Profile</span>
+                                <span>My Profile</span>
 
-    </button>
+                            </button>
 
-    <button
-        className="
+                            <button
+                                className="
             flex
             w-full
             items-center
@@ -242,15 +242,15 @@ function UserMenu() {
 
             hover:bg-white/8
         "
-    >
-        <Ticket size={18} />
+                            >
+                                <Ticket size={18} />
 
-        <span>My Registrations</span>
+                                <span>My Registrations</span>
 
-    </button>
+                            </button>
 
-    <button
-        className="
+                            <button
+                                className="
             flex
             w-full
             items-center
@@ -268,26 +268,26 @@ function UserMenu() {
 
             hover:bg-white/8
         "
-    >
-        <Settings size={18} />
+                            >
+                                <Settings size={18} />
 
-        <span>Settings</span>
+                                <span>Settings</span>
 
-    </button>
+                            </button>
 
-</div>
+                        </div>
 
-<div className="border-t border-white/10 p-2">
+                        <div className="border-t border-white/10 p-2">
 
-    <button
-        onClick={() => {
+                            <button
+                                onClick={() => {
 
-            logout();
+                                    logout();
 
-            navigate("/login");
+                                    navigate("/login");
 
-        }}
-        className="
+                                }}
+                                className="
             flex
             w-full
             items-center
@@ -305,24 +305,24 @@ function UserMenu() {
 
             hover:bg-red-500/10
         "
-    >
+                            >
 
-        <LogOut size={18} />
+                                <LogOut size={18} />
 
-        <span>Logout</span>
+                                <span>Logout</span>
 
-    </button>
+                            </button>
 
-</div>
+                        </div>
                     </motion.div>
 
                 )}
 
             </AnimatePresence>
-                
+
 
         </div>
-        
+
 
     );
 

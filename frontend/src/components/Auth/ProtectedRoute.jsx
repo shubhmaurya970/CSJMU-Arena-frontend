@@ -14,9 +14,6 @@ function ProtectedRoute({ children }) {
 
     return (
         <>
-            <h1 style={{ color: "red" }}>
-                Protected Route Passed
-            </h1>
 
             {children}
         </>

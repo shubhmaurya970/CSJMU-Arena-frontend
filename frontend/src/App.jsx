@@ -14,6 +14,7 @@ import Organizer from "./pages/Organizer/Organizer";
 import Admin from "./pages/Admin/Admin";
 import EventDetails from "./pages/EventDetails/EventDetails";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Toast from "./components/toast/Toast";
 
 
 function App() {
@@ -35,9 +36,10 @@ useEffect(() => {
 
     const location = useLocation();
 
-    const hideNavbar =
-        location.pathname === "/login" ||
-        location.pathname === "/register";
+   const hideNavbar =
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname.startsWith("/organizer");
 
         if (showSplash) {
 
@@ -45,13 +47,13 @@ useEffect(() => {
 
 }
 
-
+        
     return (
-        
-        
-        
-        <>
-            {isLoading && <PageLoader />}
+            
+        <>    
+        <Toast />
+
+        {isLoading && <PageLoader />}
             {!hideNavbar && <Navbar />}
 
             <Routes>

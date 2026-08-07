@@ -1,9 +1,18 @@
+import OrganizerLayout from "./layout/OrganizerLayout";
+import Dashboard from "./dashboard/Dashboard";
+
 function Organizer() {
+
     return (
-        <div>
-            Organizer Page
-        </div>
+
+        <OrganizerLayout>
+
+            <Dashboard />
+
+        </OrganizerLayout>
+
     );
+
 }
 
 export default Organizer;
