@@ -1,6 +1,6 @@
 function DecorativeWave() {
 
-    const waves = [
+   const waves = [
     { y: 90, a: 0 },
     { y: 104, a: 6 },
     { y: 118, a: -4 },
@@ -24,7 +24,7 @@ function DecorativeWave() {
         pointer-events-none
     "
 
-    viewBox="0 0 280 260"
+    viewBox="0 0 420 260"
 
     fill="none"
 
@@ -66,9 +66,9 @@ function DecorativeWave() {
     {/* Hide the center where the statue is */}
 
     <ellipse
-        cx="200"
+        cx="220"
         cy="180"
-        rx="80"
+        rx="50"
         ry="99"
         fill="black"
     />
@@ -84,13 +84,13 @@ function DecorativeWave() {
                    <path
     key={wave.y}
 
-    d={`
-        M-60 ${wave.y}
+   d={`
+    M-60 ${wave.y}
 
-        C30 ${25 + wave.a},
-        120 ${175 - wave.a},
-        340 ${75 + wave.a}
-    `}
+    C30 ${25 + wave.a},
+    150 ${175 - wave.a},
+    420 ${75 + wave.a}
+`}
 
     stroke="url(#goldWave)"
 

@@ -8,110 +8,87 @@ function SidebarItem({ item }) {
 
         <NavLink
             to={item.path}
+            end={item.path === "/organizer"}
+            className={({ isActive }) =>
+                `
+                group
+                relative
+                flex
+                items-center
+                gap-4
+                rounded-2xl
+                px-5
+                py-4
 
-            className={({ isActive }) => `
+                transition-all
+                duration-200
 
-    group
-
-    relative
-
-    flex
-
-    items-center
-
-    gap-4
-
-    rounded-xl
-
-    px-5
-    py-2.5
-
-    transition-all
-    duration-300
-
-    ${
-        isActive
-            ? "bg-white/[0.035] backdrop-blur-sm"
-            : "bg-transparent hover:bg-white/[0.015]"
-    }
-
-`}
+                ${
+                    isActive
+                        ? "bg-white/[0.055] text-white"
+                        : "text-zinc-400 hover:bg-white/[0.025] hover:text-zinc-200"
+                }
+                `
+            }
         >
 
             {/* Gold Indicator */}
 
             <span
-                className={`
+                className="
                     absolute
-
                     left-0
-
                     h-7
                     w-[3px]
-
                     rounded-r-full
-
-                    transition-all
-
-                    ${location.pathname === item.path
-                        ? "bg-[#D8A93B]"
-                        : "bg-transparent"
-                    }
-                `}
+                    bg-transparent
+                    group-[.active]:bg-[#D8A93B]
+                "
             />
 
             {/* Icon */}
 
             <div
-                className={`
+                className="
                     flex
-
                     h-9
                     w-9
-
                     items-center
                     justify-center
-
                     rounded-full
-
                     transition-all
-
-                    ${location.pathname === item.path
-                        ? "bg-[#D8A93B]/10 text-[#D8A93B]"
-                        : "text-white/55 group-hover:text-white"
-                    }
-                `}
+                    duration-200
+                "
             >
-
-                <Icon size={19} />
-
+                <Icon
+                    size={19}
+                    className="
+                        text-white/55
+                        transition-colors
+                        duration-200
+                        group-hover:text-white
+                    "
+                />
             </div>
 
             {/* Label */}
 
             <span
-                className={`
+                className="
                     text-[15px]
-
                     font-medium
-
-                    transition-all
-
-                    ${location.pathname === item.path
-                        ? "text-white"
-                        : "text-white/70 group-hover:text-white"
-                    }
-                `}
+                    text-white/70
+                    transition-colors
+                    duration-200
+                    group-hover:text-white
+                "
             >
-
                 {item.label}
-
             </span>
 
         </NavLink>
 
     );
-
 }
 
 export default SidebarItem;

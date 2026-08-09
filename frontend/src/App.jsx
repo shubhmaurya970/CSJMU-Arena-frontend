@@ -3,7 +3,7 @@ import Home from "./pages/Home/Home";
 import { useEffect, useState } from "react";
 import PageLoader from "./components/loading/PageLoader";
 import { useLoading } from "./context/LoadingContext";
-
+import CreateEvent from "./pages/Organizer/create-event/CreateEvent";
 
 import { Routes, Route, useLocation } from "react-router-dom";
 
@@ -16,72 +16,112 @@ import EventDetails from "./pages/EventDetails/EventDetails";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Toast from "./components/toast/Toast";
 
+import OrganizerLayout from "./pages/Organizer/layout/OrganizerLayout";
 
 function App() {
 
     const { isLoading } = useLoading();
     const [showSplash, setShowSplash] = useState(true);
 
-useEffect(() => {
+    useEffect(() => {
 
-    const timer = setTimeout(() => {
+        const timer = setTimeout(() => {
+            setShowSplash(false);
+        }, 1200);
 
-        setShowSplash(false);
+        return () => clearTimeout(timer);
 
-    }, 1200);
-
-    return () => clearTimeout(timer);
-
-}, []);
+    }, []);
 
     const location = useLocation();
 
-   const hideNavbar =
-    location.pathname === "/login" ||
-    location.pathname === "/register" ||
-    location.pathname.startsWith("/organizer");
+    const hideNavbar =
+        location.pathname === "/login" ||
+        location.pathname === "/register" ||
+        location.pathname.startsWith("/organizer");
 
-        if (showSplash) {
+    if (showSplash) {
+        return <PageLoader />;
+    }
 
-    return <PageLoader />;
-
-}
-
-        
     return (
-            
-        <>    
-        <Toast />
+        <>
+            <Toast />
 
-        {isLoading && <PageLoader />}
+            {isLoading && <PageLoader />}
+
             {!hideNavbar && <Navbar />}
 
             <Routes>
-                <Route path="/" element={<Home />} />
 
-                <Route path="/login" element={<Login />} />
-
-                <Route path="/register" element={<Register />} />
-
-                <Route path="/about" element={<About />} />
+                {/* Public Routes */}
 
                 <Route
-    path="/organizer"
-    element={
-        <ProtectedRoute>
-            <Organizer />
-        </ProtectedRoute>
-    }
-/>
+                    path="/"
+                    element={<Home />}
+                />
+
                 <Route
-    path="/admin"
-    element={
-        <ProtectedRoute>
-            <Admin />
-        </ProtectedRoute>
-    }
-/>
-                <Route path="/event/:id" element={<EventDetails />} />
+                    path="/login"
+                    element={<Login />}
+                />
+
+                <Route
+                    path="/register"
+                    element={<Register />}
+                />
+
+                <Route
+                    path="/about"
+                    element={<About />}
+                />
+
+
+                {/* Organizer Dashboard */}
+
+                <Route
+                    path="/organizer"
+                    element={
+                        <ProtectedRoute>
+                            <Organizer />
+                        </ProtectedRoute>
+                    }
+                />
+
+
+                {/* Create Event */}
+
+                <Route
+                    path="/organizer/create"
+                    element={
+                        <ProtectedRoute>
+                            <OrganizerLayout>
+                                <CreateEvent />
+                            </OrganizerLayout>
+                        </ProtectedRoute>
+                    }
+                />
+
+
+                {/* Admin */}
+
+                <Route
+                    path="/admin"
+                    element={
+                        <ProtectedRoute>
+                            <Admin />
+                        </ProtectedRoute>
+                    }
+                />
+
+
+                {/* Event Details */}
+
+                <Route
+                    path="/event/:id"
+                    element={<EventDetails />}
+                />
+
             </Routes>
         </>
     );

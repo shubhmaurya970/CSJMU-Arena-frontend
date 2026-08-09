@@ -1,28 +1,25 @@
 import SidebarHeader from "./SidebarHeader";
 import SidebarNav from "./SidebarNav";
 import SidebarBranding from "./SidebarBranding";
-import SidebarLogout from "./SidebarLogout";
+// import SidebarLogout from "./SidebarLogout";
 
 function Sidebar() {
 
     return (
 
         <aside
-            className="
-                flex
-                h-screen
-                w-[310px]
-                flex-col
-                overflow-y-auto
-                bg-[#151515]
+    className="
+        sticky
+        top-0
+        h-screen
+        w-[340px]
+        overflow-hidden
 
-                border-r
-                border-white/5
-
-                overflow-hidden
-            "
-            
-        >
+        border-r
+        border-white/[0.06]
+        bg-[#151515]
+    "
+>
             <div
     className="
         absolute
@@ -43,7 +40,7 @@ function Sidebar() {
 
             <SidebarBranding />
 
-            <SidebarLogout />
+            {/* <SidebarLogout /> */}
 
         </aside>
 

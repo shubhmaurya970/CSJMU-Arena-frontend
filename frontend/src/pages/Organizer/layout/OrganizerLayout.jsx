@@ -8,8 +8,8 @@ function OrganizerLayout({ children }) {
             className="
                 flex
 
-                min-h-screen
-
+                h-screen
+                sidebar-scroll
                 bg-[#111111]
             "
         >
