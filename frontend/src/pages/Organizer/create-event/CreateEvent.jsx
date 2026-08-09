@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { saveEventImage } from "../../../utils/eventImageStorage";
 import {
     CalendarDays,
     MapPin,
@@ -14,6 +16,9 @@ import {
 
 
 function CreateEvent() {
+
+     const navigate = useNavigate();
+
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState("");
 
@@ -40,17 +45,68 @@ function CreateEvent() {
 
     };
 
-    const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        e.preventDefault();
-
-        console.log("Event Data:", {
-            ...formData,
-            maxParticipants: Number(formData.maxParticipants),
-            registrationFee: Number(formData.registrationFee),
-        });
-
+    const eventData = {
+        title: formData.title,
+        description: formData.description,
+        venue: formData.venue,
+        eventDate: formData.eventDate,
+        registrationDeadline: formData.registrationDeadline,
+        category: formData.category,
+        maxParticipants: Number(formData.maxParticipants),
+        registrationFee: Number(formData.registrationFee),
     };
+
+    try {
+        const token = localStorage.getItem("token");
+
+        console.log("Token:", token);
+        console.log("Sending:", eventData);
+
+        const response = await fetch(
+            "http://localhost:8080/api/events",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(eventData),
+            }
+        );
+
+        console.log("Status:", response.status);
+
+        const rawResponse = await response.text();
+
+        console.log("Raw backend response:", rawResponse);
+
+        if (!response.ok) {
+            throw new Error(
+                `Request failed: ${response.status} ${rawResponse}`
+            );
+        }
+
+        const data = rawResponse
+            ? JSON.parse(rawResponse)
+            : null;
+
+        console.log("Parsed response:", data);
+
+
+        if (imageFile && data?.data?.id) {
+    await saveEventImage(data.data.id, imageFile);
+}
+        navigate("/organizer/event-created");
+        
+
+    } catch (error) {
+        console.error("Create event error:", error);
+        alert(error.message);
+    }
+};
 
     return (
         <div className="mx-auto w-full max-w-6xl">

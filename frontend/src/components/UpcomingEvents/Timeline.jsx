@@ -28,7 +28,7 @@ function Timeline({ events }) {
                 initial={{ scaleY: 0 }}
                 whileInView={{ scaleY: 1 }}
                 viewport={{
-                    once: false,
+                    once: true,
                     amount: 0.2,
                 }}
                 transition={{

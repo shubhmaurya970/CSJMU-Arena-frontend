@@ -1,7 +1,38 @@
+import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { getEventImage } from "../../utils/eventImageStorage";
+
 
 function UpcomingEventCard({ event }) {
 
+    const [imageUrl, setImageUrl] = useState(null);
+    useEffect(() => {
+    let objectUrl;
+
+    const loadImage = async () => {
+        try {
+            const file = await getEventImage(event.id);
+
+            if (file) {
+                objectUrl = URL.createObjectURL(file);
+                setImageUrl(objectUrl);
+            }
+        } catch (error) {
+            console.error(
+                "Failed to load event image:",
+                error
+            );
+        }
+    };
+
+    loadImage();
+
+    return () => {
+        if (objectUrl) {
+            URL.revokeObjectURL(objectUrl);
+        }
+    };
+}, [event.id]);
     
     const categoryNames = {
         HACKATHON: "Hackathon",
@@ -52,7 +83,7 @@ function UpcomingEventCard({ event }) {
         "
     >
         <img
-            src={event.imageUrl}
+            src={imageUrl || event.imageUrl}
             alt={event.title}
             className="
                 h-full

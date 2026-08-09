@@ -22,7 +22,7 @@ export const navigation = [
     {
         label: "My Events",
         icon: CalendarDays,
-        path: "/organizer/events"
+        path: "/organizer/my-events"
     },
 
     {

@@ -1,19 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SectionHeader from "./SectionHeader";
 import FilterTabs from "./FilterTabs";
 import Timeline from "./Timeline";
-import events from "./events";
 import SearchBar from "./SearchBar";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 
 function UpcomingEvents() {
 
     const [showAllEvents, setShowAllEvents] = useState(false);
 
-    const [searchQuery, setSearchQuery] = useState("");
+    const [events, setEvents] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
 
     const [selectedCategory, setSelectedCategory] = useState("ALL");
+
+    const [searchQuery, setSearchQuery] = useState("");
 
     const filteredEvents = events.filter((event) => {
 
@@ -30,6 +35,44 @@ function UpcomingEvents() {
         return matchesCategory && matchesSearch;
 
     });
+    useEffect(() => {
+    const fetchEvents = async () => {
+        try {
+            setLoading(true);
+            setError("");
+
+            const response = await fetch(
+                "http://localhost:8080/api/events"
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message || "Failed to fetch events."
+                );
+            }
+
+            const fetchedEvents = data.data || [];
+
+            const sortedEvents = [...fetchedEvents].sort(
+                (a, b) =>
+                    new Date(a.eventDate) -
+                    new Date(b.eventDate)
+            );
+
+            setEvents(sortedEvents);
+
+        } catch (error) {
+            console.error("Events fetch error:", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchEvents();
+}, []);
     
 
     const visibleEvents = showAllEvents
@@ -95,7 +138,21 @@ pb-20
 
                 </div>
 
-                <Timeline events={visibleEvents} />
+               {loading ? (
+    <div className="flex min-h-[300px] items-center justify-center">
+        <div className="text-sm tracking-wide text-white/40">
+            Loading events...
+        </div>
+    </div>
+) : error ? (
+    <div className="flex min-h-[300px] items-center justify-center">
+        <div className="text-sm text-red-400/70">
+            {error}
+        </div>
+    </div>
+) : (
+    <Timeline events={visibleEvents} />
+)}
 
                 {filteredEvents.length > 2 && (
                     <div className="mt-20 flex justify-center">

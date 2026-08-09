@@ -11,12 +11,14 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import About from "./pages/About/About";
 import Organizer from "./pages/Organizer/Organizer";
-import Admin from "./pages/Admin/Admin";
+import Admin from "./pages/Admin/AdminEvents";
 import EventDetails from "./pages/EventDetails/EventDetails";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Toast from "./components/toast/Toast";
 
 import OrganizerLayout from "./pages/Organizer/layout/OrganizerLayout";
+import EventCreated from "./pages/organizer/create-event/EventCreated";
+import MyEvents from "./pages/organizer/create-event/MyEvents";
 
 function App() {
 
@@ -65,6 +67,10 @@ function App() {
                     path="/login"
                     element={<Login />}
                 />
+                <Route
+                    path="/organizer/my-events"
+                    element={<MyEvents />}
+                />
 
                 <Route
                     path="/register"
@@ -74,6 +80,10 @@ function App() {
                 <Route
                     path="/about"
                     element={<About />}
+                />
+                <Route
+                    path="/organizer/event-created"
+                    element={<EventCreated />}
                 />
 
 
