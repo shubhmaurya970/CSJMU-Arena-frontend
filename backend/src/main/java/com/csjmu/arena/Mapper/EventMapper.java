@@ -18,7 +18,7 @@ public class EventMapper {
                 .status(event.getStatus())
                 .maxParticipants(event.getMaxParticipants())
                 .registrationFee(event.getRegistrationFee())
-                .imageUrl(event.getImageUrl())
+
                 .organizerName(event.getOrganizer().getFullName())
                 .build();
     }

@@ -8,17 +8,22 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.csjmu.arena.security.CustomUserDetailsService;
+import com.csjmu.arena.entity.User;
+import com.csjmu.arena.repository.UserRepository;
 @Service
 public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final CustomUserDetailsService customUserDetailsService;
+    private final UserRepository userRepository;
 
     public AuthenticationService(AuthenticationManager authenticationManager,
                                  JwtService jwtService,
-                                 CustomUserDetailsService customUserDetailsService) {
+                                 CustomUserDetailsService customUserDetailsService,
+                                 UserRepository userRepository){
 
+        this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.customUserDetailsService = customUserDetailsService;
@@ -41,10 +46,17 @@ public class AuthenticationService {
                 .loadUserByUsername(request.getEmail());
 
         String token = jwtService.generateToken(user);
+        User loggedInUser = userRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
 
         return LoginResponse.builder()
                 .token(token)
                 .type("Bearer")
+                .name(loggedInUser.getFullName())
+                .email(loggedInUser.getEmail())
+                .role(loggedInUser.getRole().name())
                 .build();
 
     }
