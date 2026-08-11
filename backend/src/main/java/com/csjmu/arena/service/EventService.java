@@ -78,7 +78,33 @@ public class EventService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Event not found."));
 
-        return EventMapper.toResponse(event);
+        User currentUser = securityUtil.getCurrentUserOrNull();
+
+        // Approved events are visible to everyone
+        if (event.getStatus() == EventStatus.APPROVED) {
+            return EventMapper.toResponse(event);
+        }
+
+        // Admin can view every event
+        if (currentUser != null &&
+                currentUser.getRole().name().equals("ADMIN")) {
+
+            return EventMapper.toResponse(event);
+        }
+
+        // Organizer can view their own pending/rejected event
+        if (currentUser != null &&
+                currentUser.getRole().name().equals("ORGANIZER") &&
+                event.getOrganizer() != null &&
+                event.getOrganizer().getId()
+                        .equals(currentUser.getId())) {
+
+            return EventMapper.toResponse(event);
+        }
+
+        throw new UnauthorizedActionException(
+                "You are not allowed to view this event."
+        );
     }
 
     public EventResponse approveEvent(Long id) {

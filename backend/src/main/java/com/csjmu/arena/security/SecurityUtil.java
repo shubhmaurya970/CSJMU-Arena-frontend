@@ -15,4 +15,24 @@ public class SecurityUtil {
 
         return (User) authentication.getPrincipal();
     }
+
+    public User getCurrentUserOrNull() {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null ||
+                !authentication.isAuthenticated() ||
+                authentication.getPrincipal() == null ||
+                authentication.getPrincipal().equals("anonymousUser")) {
+
+            return null;
+        }
+
+        if (!(authentication.getPrincipal() instanceof User)) {
+            return null;
+        }
+
+        return (User) authentication.getPrincipal();
+    }
 }
