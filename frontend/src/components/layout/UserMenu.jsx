@@ -1,6 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import LoadingPage from "../loading/PageLoader";
+
 import {
     User,
     Ticket,
@@ -11,6 +13,15 @@ import {
 import { AuthContext } from "../../context/AuthContext";
 
 function UserMenu() {
+
+    const navigate = useNavigate();
+
+    const { user, logout } = useContext(AuthContext);
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isNavigating, setIsNavigating] = useState(false);
+
+    const dropdownRef = useRef(null);
 
     const roleColors = {
         STUDENT:
@@ -23,13 +34,17 @@ function UserMenu() {
             "bg-red-500/15 text-red-400",
     };
 
-    const navigate = useNavigate();
+    // Navigation with loading screen
+    const handleNavigation = (path) => {
 
-    const { user, logout } = useContext(AuthContext);
+        setIsMenuOpen(false);
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+        setIsNavigating(true);
 
-    const dropdownRef = useRef(null);
+        setTimeout(() => {
+            navigate(path);
+        }, 700);
+    };
 
     useEffect(() => {
 
@@ -44,16 +59,26 @@ function UserMenu() {
 
         };
 
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener(
+            "mousedown",
+            handleClickOutside
+        );
 
         return () => {
+
             document.removeEventListener(
                 "mousedown",
                 handleClickOutside
             );
+
         };
 
     }, []);
+
+    // Show your existing loading page
+    if (isNavigating) {
+        return <LoadingPage />;
+    }
 
     return (
 
@@ -62,13 +87,42 @@ function UserMenu() {
             className="relative"
         >
 
+            {/* USER BUTTON */}
+
             <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex items-center gap-3 rounded-full px-4 py-2 text-white transition-all duration-300 hover:bg-white/10"
+                onClick={() =>
+                    setIsMenuOpen(!isMenuOpen)
+                }
+                className="
+                    flex
+                    items-center
+                    gap-3
+                    rounded-full
+                    px-4
+                    py-2
+                    text-white
+                    transition-all
+                    duration-300
+                    hover:bg-white/10
+                "
             >
 
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4C542] font-semibold text-black">
-                    {user?.name?.charAt(0).toUpperCase()}
+                <div
+                    className="
+                        flex
+                        h-9
+                        w-9
+                        items-center
+                        justify-center
+                        rounded-full
+                        bg-[#F4C542]
+                        font-semibold
+                        text-black
+                    "
+                >
+                    {user?.name
+                        ?.charAt(0)
+                        .toUpperCase()}
                 </div>
 
                 <span className="font-medium">
@@ -81,6 +135,7 @@ function UserMenu() {
 
             </button>
 
+
             <AnimatePresence>
 
                 {isMenuOpen && (
@@ -90,7 +145,7 @@ function UserMenu() {
                         initial={{
                             opacity: 0,
                             y: -10,
-                            scale: .97,
+                            scale: 0.97,
                         }}
 
                         animate={{
@@ -102,64 +157,52 @@ function UserMenu() {
                         exit={{
                             opacity: 0,
                             y: -10,
-                            scale: .97,
+                            scale: 0.97,
                         }}
 
                         transition={{
-                            duration: .22,
+                            duration: 0.22,
                         }}
 
                         className="
                             absolute
-
                             right-0
                             top-16
-
                             w-80
-
                             overflow-hidden
-
                             rounded-3xl
-
                             border
                             border-[#F4C542]/20
-
                             bg-[#181512]/95
-
                             backdrop-blur-xl
-
                             shadow-[0_25px_70px_rgba(0,0,0,.45)]
                         "
                     >
+
+                        {/* USER INFO */}
 
                         <div className="border-b border-white/10 p-6">
 
                             <div className="flex items-center gap-4">
 
-                                {/* Avatar */}
-
                                 <div
                                     className="
-                flex
-                h-14
-                w-14
-                items-center
-                justify-center
-
-                rounded-full
-
-                bg-[#F4C542]
-
-                text-xl
-                font-bold
-
-                text-black
-            "
+                                        flex
+                                        h-14
+                                        w-14
+                                        items-center
+                                        justify-center
+                                        rounded-full
+                                        bg-[#F4C542]
+                                        text-xl
+                                        font-bold
+                                        text-black
+                                    "
                                 >
-                                    {user?.name?.charAt(0).toUpperCase()}
+                                    {user?.name
+                                        ?.charAt(0)
+                                        .toUpperCase()}
                                 </div>
-
-                                {/* User Info */}
 
                                 <div className="flex-1">
 
@@ -171,15 +214,14 @@ function UserMenu() {
 
                                         <span
                                             className={`
-        rounded-full
-        px-3
-        py-1
-        text-[10px]
-        font-semibold
-        tracking-[2px]
-
-        ${roleColors[user?.role]}
-    `}
+                                                rounded-full
+                                                px-3
+                                                py-1
+                                                text-[10px]
+                                                font-semibold
+                                                tracking-[2px]
+                                                ${roleColors[user?.role]}
+                                            `}
                                         >
                                             {user?.role}
                                         </span>
@@ -195,87 +237,103 @@ function UserMenu() {
                             </div>
 
                         </div>
+
+
+                        {/* MENU */}
+
                         <div className="p-2">
 
+                            {/* MY PROFILE */}
+
                             <button
+                                onClick={() =>
+                                    handleNavigation(
+                                        "/organizer"
+                                    )
+                                }
                                 className="
-            flex
-            w-full
-            items-center
-            gap-3
-
-            rounded-2xl
-
-            px-4
-            py-3
-
-            text-white
-
-            transition-all
-            duration-300
-
-            hover:bg-white/8
-        "
+                                    flex
+                                    w-full
+                                    items-center
+                                    gap-3
+                                    rounded-2xl
+                                    px-4
+                                    py-3
+                                    text-white
+                                    transition-all
+                                    duration-300
+                                    hover:bg-white/8
+                                "
                             >
                                 <User size={18} />
 
-                                <span>My Profile</span>
+                                <span>
+                                    My Profile
+                                </span>
 
                             </button>
 
+
+                            {/* MY EVENTS */}
+
                             <button
+                                onClick={() =>
+                                    handleNavigation(
+                                        "/organizer/my-events"
+                                    )
+                                }
                                 className="
-            flex
-            w-full
-            items-center
-            gap-3
-
-            rounded-2xl
-
-            px-4
-            py-3
-
-            text-white
-
-            transition-all
-            duration-300
-
-            hover:bg-white/8
-        "
+                                    flex
+                                    w-full
+                                    items-center
+                                    gap-3
+                                    rounded-2xl
+                                    px-4
+                                    py-3
+                                    text-white
+                                    transition-all
+                                    duration-300
+                                    hover:bg-white/8
+                                "
                             >
                                 <Ticket size={18} />
 
-                                <span>My Registrations</span>
+                                <span>
+                                    My Events
+                                </span>
 
                             </button>
 
+
+                            {/* SETTINGS */}
+
                             <button
                                 className="
-            flex
-            w-full
-            items-center
-            gap-3
-
-            rounded-2xl
-
-            px-4
-            py-3
-
-            text-white
-
-            transition-all
-            duration-300
-
-            hover:bg-white/8
-        "
+                                    flex
+                                    w-full
+                                    items-center
+                                    gap-3
+                                    rounded-2xl
+                                    px-4
+                                    py-3
+                                    text-white
+                                    transition-all
+                                    duration-300
+                                    hover:bg-white/8
+                                "
                             >
                                 <Settings size={18} />
 
-                                <span>Settings</span>
+                                <span>
+                                    Settings
+                                </span>
 
                             </button>
 
                         </div>
+
+
+                        {/* LOGOUT */}
 
                         <div className="border-t border-white/10 p-2">
 
@@ -288,44 +346,38 @@ function UserMenu() {
 
                                 }}
                                 className="
-            flex
-            w-full
-            items-center
-            gap-3
-
-            rounded-2xl
-
-            px-4
-            py-3
-
-            text-red-400
-
-            transition-all
-            duration-300
-
-            hover:bg-red-500/10
-        "
+                                    flex
+                                    w-full
+                                    items-center
+                                    gap-3
+                                    rounded-2xl
+                                    px-4
+                                    py-3
+                                    text-red-400
+                                    transition-all
+                                    duration-300
+                                    hover:bg-red-500/10
+                                "
                             >
 
                                 <LogOut size={18} />
 
-                                <span>Logout</span>
+                                <span>
+                                    Logout
+                                </span>
 
                             </button>
 
                         </div>
+
                     </motion.div>
 
                 )}
 
             </AnimatePresence>
 
-
         </div>
-
-
     );
-
 }
 
 export default UserMenu;

@@ -12,13 +12,13 @@ import Register from "./pages/Register/Register";
 import About from "./pages/About/About";
 import Organizer from "./pages/Organizer/Organizer";
 import Admin from "./pages/Admin/AdminEvents";
-import EventDetails from "./pages/EventDetails/EventDetails";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Toast from "./components/toast/Toast";
 
 import OrganizerLayout from "./pages/Organizer/layout/OrganizerLayout";
 import EventCreated from "./pages/organizer/create-event/EventCreated";
 import MyEvents from "./pages/organizer/create-event/MyEvents";
+import EventDetails from "./pages/organizer/events/EventDetails";
 
 function App() {
 
@@ -35,12 +35,19 @@ function App() {
 
     }, []);
 
-    const location = useLocation();
+   const location = useLocation();
 
-    const hideNavbar =
-        location.pathname === "/login" ||
-        location.pathname === "/register" ||
-        location.pathname.startsWith("/organizer");
+const isAdminPage =
+    location.pathname === "/admin" ||
+    location.pathname.startsWith("/admin/");
+
+const hideNavbar =
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname.startsWith("/organizer") ||
+    location.pathname.startsWith("/event/") ||
+    isAdminPage;
+    
 
     if (showSplash) {
         return <PageLoader />;
@@ -111,7 +118,10 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
-
+                <Route
+                    path="/organizer/events/:id"
+                    element={<EventDetails />}
+                />
 
                 {/* Admin */}
 

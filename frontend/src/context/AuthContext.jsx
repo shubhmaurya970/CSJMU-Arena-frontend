@@ -54,6 +54,7 @@ const [user, setUser] = useState(
         <AuthContext.Provider
     value={{
         isLoggedIn,
+        token,
         user,
         login,
         logout,
