@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 @Builder
 public class Event {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -68,4 +70,14 @@ public class Event {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt;
+
+    @Column(columnDefinition = "TEXT")
+    private String adminMessage;
+
+    @Column(columnDefinition = "TEXT")
+    private String adminReason;
+
+    private LocalDateTime reviewedAt;
+
+    private LocalDateTime takenDownAt;
 }

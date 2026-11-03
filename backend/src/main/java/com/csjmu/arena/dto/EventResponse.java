@@ -3,7 +3,7 @@ package com.csjmu.arena.dto;
 import com.csjmu.arena.entity.EventCategory;
 import com.csjmu.arena.entity.EventStatus;
 import lombok.*;
-
+import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 @Getter
@@ -36,4 +36,9 @@ public class EventResponse {
     private String imageUrl;
 
     private String organizerName;
+
+    private String adminMessage;
+    private String adminReason;
+    private LocalDateTime reviewedAt;
+    private LocalDateTime takenDownAt;
 }

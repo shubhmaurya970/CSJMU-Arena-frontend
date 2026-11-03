@@ -10,6 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import com.csjmu.arena.dto.OrganizerDashboardResponse;
 import java.util.List;
 import com.csjmu.arena.entity.EventCategory;
+import com.csjmu.arena.dto.UpdateEventRequest;
+import com.csjmu.arena.entity.EventStatus;
 
 @RestController
 @RequestMapping("/api/events")
@@ -132,5 +134,30 @@ public class EventController {
                 .data(response)
                 .build();
     }
+    @PutMapping("/{id}/edit")
+    @PreAuthorize("hasRole('ORGANIZER')")
+    public ApiResponse<EventResponse> editEvent(
+            @PathVariable Long id,
+            @RequestBody UpdateEventRequest request) {
+
+        EventResponse response =
+                eventService.editEvent(id, request);
+
+        String message;
+
+        if (response.getStatus() == EventStatus.APPROVED) {
+            message = "Event update request submitted for admin approval.";
+        } else {
+            message = "Event updated successfully.";
+        }
+
+        return ApiResponse.<EventResponse>builder()
+                .success(true)
+                .message(message)
+                .data(response)
+                .build();
+    }
+
 
 }
+

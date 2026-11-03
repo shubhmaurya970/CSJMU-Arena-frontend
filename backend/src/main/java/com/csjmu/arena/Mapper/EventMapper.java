@@ -18,9 +18,14 @@ public class EventMapper {
                 .status(event.getStatus())
                 .maxParticipants(event.getMaxParticipants())
                 .registrationFee(event.getRegistrationFee())
-
-                .organizerName(event.getOrganizer().getFullName())
+                .imageUrl(event.getImageUrl())
+                .adminMessage(event.getAdminMessage())
+                .adminReason(event.getAdminReason())
+                .reviewedAt(event.getReviewedAt())
+                .takenDownAt(event.getTakenDownAt())
+                .organizerName(
+                        event.getOrganizer().getFullName()
+                )
                 .build();
     }
-
 }

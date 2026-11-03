@@ -8,6 +8,9 @@ public enum EventStatus {
 
     REJECTED,
 
-    CANCELLED
+    CANCELLED,
+
+    TAKEN_DOWN
+
 
 }
