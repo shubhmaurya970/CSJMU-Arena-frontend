@@ -455,14 +455,26 @@ function MyEvents() {
                     }
                 );
 
-                const data = await response.json();
+                const rawResponse = await response.text();
 
-                if (!response.ok) {
-                    throw new Error(
-                        data.message ||
-                        "Failed to fetch your events."
-                    );
-                }
+let data = null;
+
+if (rawResponse) {
+    try {
+        data = JSON.parse(rawResponse);
+    } catch {
+        data = null;
+    }
+}
+
+if (!response.ok) {
+    throw new Error(
+        data?.message ||
+        `Failed to fetch your events. (${response.status})`
+    );
+}
+
+setEvents(data?.data || []);
 
                 setEvents(data.data || []);
 

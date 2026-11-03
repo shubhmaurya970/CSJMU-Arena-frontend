@@ -143,83 +143,106 @@ function EventDetails() {
     };
 
 
-    const handleApprove = async () => {
-        try {
-            setActionLoading(true);
-            setActionError("");
+   const handleApprove = async () => {
+    try {
+        setActionLoading(true);
+        setActionError("");
 
-            const response = await fetch(
-                `/api/admin/events/${id}/approve`,
-                {
-                    method: "PATCH",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(
-                    data?.message ||
-                    "Failed to approve event."
-                );
+        const response = await fetch(
+            `/api/admin/events/${id}/approve`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({}),
             }
+        );
 
-            setEvent(
-                data?.data || {
-                    ...event,
-                    status: "APPROVED",
-                }
-            );
+        const rawResponse = await response.text();
 
-        } catch (err) {
-            setActionError(err.message);
-        } finally {
-            setActionLoading(false);
+        let data = null;
+
+        if (rawResponse) {
+            try {
+                data = JSON.parse(rawResponse);
+            } catch {
+                data = { message: rawResponse };
+            }
         }
-    };
+
+        if (!response.ok) {
+            throw new Error(
+                data?.message ||
+                `Failed to approve event. Status: ${response.status}`
+            );
+        }
+
+        setEvent(
+            data?.data || {
+                ...event,
+                status: "APPROVED",
+            }
+        );
+
+    } catch (err) {
+        setActionError(err.message);
+    } finally {
+        setActionLoading(false);
+    }
+};
 
 
     const handleReject = async () => {
-        try {
-            setActionLoading(true);
-            setActionError("");
+    try {
+        setActionLoading(true);
+        setActionError("");
 
-            const response = await fetch(
-                `/api/admin/events/${id}/reject`,
-                {
-                    method: "PATCH",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(
-                    data?.message ||
-                    "Failed to reject event."
-                );
+        const response = await fetch(
+            `/api/admin/events/${id}/reject`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({}),
             }
+        );
 
-            setEvent(
-                data?.data || {
-                    ...event,
-                    status: "REJECTED",
-                }
-            );
+        const rawResponse = await response.text();
 
-        } catch (err) {
-            setActionError(err.message);
-        } finally {
-            setActionLoading(false);
+        let data = null;
+
+        if (rawResponse) {
+            try {
+                data = JSON.parse(rawResponse);
+            } catch {
+                data = { message: rawResponse };
+            }
         }
-    };
 
+        if (!response.ok) {
+            throw new Error(
+                data?.message ||
+                `Failed to reject event. Status: ${response.status}`
+            );
+        }
+
+        setEvent(
+            data?.data || {
+                ...event,
+                status: "REJECTED",
+            }
+        );
+
+    } catch (err) {
+        setActionError(err.message);
+    } finally {
+        setActionLoading(false);
+    }
+};
 
     if (loading) {
         return (

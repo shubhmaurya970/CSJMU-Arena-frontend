@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Eye, Check, X, CalendarDays, MapPin, IndianRupee } from "lucide-react";
+import {
+    Eye,
+    Check,
+    X,
+    CalendarDays,
+    MapPin,
+    IndianRupee,
+    Ban
+} from "lucide-react";
 import { getEventImage } from "../../../utils/eventImageStorage";
 
 function AdminEventCard({
@@ -7,6 +15,7 @@ function AdminEventCard({
     onView,
     onApprove,
     onReject,
+    onTakeDown,
     isProcessing,
 }) {
 
@@ -170,22 +179,34 @@ function AdminEventCard({
                                 </span>
 
 
-                                <span
-                                    className="
-                                        flex
-                                        items-center
-                                        gap-2
-                                        text-[10px]
-                                        font-semibold
-                                        uppercase
-                                        tracking-[2px]
-                                        text-amber-400
-                                    "
-                                >
-                                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                                    Pending Review
-                                </span>
+                               {event.status !== "TAKEN_DOWN" && (
+    <span
+        className={`
+            flex
+            items-center
+            gap-2
+            text-[10px]
+            font-semibold
+            uppercase
+            tracking-[2px]
+            ${
+                event.status === "APPROVED"
+                    ? "text-emerald-400"
+                    : event.status === "REJECTED"
+                    ? "text-red-400"
+                    : "text-amber-400"
+            }
+        `}
+    >
+        <span className="h-1.5 w-1.5 rounded-full bg-current" />
 
+        {event.status === "APPROVED"
+            ? "Live"
+            : event.status === "REJECTED"
+            ? "Rejected"
+            : "Pending Review"}
+    </span>
+)}
                             </div>
 
 
@@ -259,100 +280,136 @@ function AdminEventCard({
                     {/* ACTIONS */}
 
                     <div
-                        className="
-                            mt-auto
-                            flex
-                            items-center
-                            justify-end
-                            gap-3
-                            pt-7
-                        "
-                    >
+    className="
+        mt-auto
+        flex
+        items-center
+        justify-end
+        gap-3
+        pt-7
+    "
+>
 
-                        <button
-                            onClick={() => onView(event.id)}
-                            disabled={isProcessing}
-                            className="
-                                flex
-                                items-center
-                                gap-2
-                                rounded-xl
-                                border
-                                border-white/10
-                                bg-white/[0.03]
-                                px-4
-                                py-2.5
-                                text-sm
-                                font-medium
-                                text-white/70
-                                transition-all
-                                hover:border-white/20
-                                hover:bg-white/[0.07]
-                                hover:text-white
-                                disabled:cursor-not-allowed
-                                disabled:opacity-40
-                            "
-                        >
-                            <Eye size={16} />
-                            View
-                        </button>
-
-
-                        <button
-                            onClick={() => onReject(event.id)}
-                            disabled={isProcessing}
-                            className="
-                                flex
-                                items-center
-                                gap-2
-                                rounded-xl
-                                border
-                                border-red-500/20
-                                bg-red-500/[0.06]
-                                px-4
-                                py-2.5
-                                text-sm
-                                font-medium
-                                text-red-400
-                                transition-all
-                                hover:border-red-500/30
-                                hover:bg-red-500/10
-                                disabled:cursor-not-allowed
-                                disabled:opacity-40
-                            "
-                        >
-                            <X size={16} />
-                            Reject
-                        </button>
+    {/* VIEW */}
+    <button
+        onClick={() => onView(event.id)}
+        disabled={isProcessing}
+        className="
+            flex
+            items-center
+            gap-2
+            rounded-xl
+            border
+            border-white/10
+            bg-white/[0.03]
+            px-4
+            py-2.5
+            text-sm
+            font-medium
+            text-white/70
+            transition-all
+            hover:border-white/20
+            hover:bg-white/[0.07]
+            hover:text-white
+            disabled:cursor-not-allowed
+            disabled:opacity-40
+        "
+    >
+        <Eye size={16} />
+        View
+    </button>
 
 
-                        <button
-                            onClick={() => onApprove(event.id)}
-                            disabled={isProcessing}
-                            className="
-                                flex
-                                items-center
-                                gap-2
-                                rounded-xl
-                                bg-[#F4C542]
-                                px-5
-                                py-2.5
-                                text-sm
-                                font-semibold
-                                text-black
-                                transition-all
-                                hover:bg-[#FFD95A]
-                                hover:shadow-[0_8px_30px_rgba(244,197,66,.18)]
-                                disabled:cursor-not-allowed
-                                disabled:opacity-40
-                            "
-                        >
-                            <Check size={16} />
-                            Approve
-                        </button>
+    {/* APPROVE + REJECT ONLY FOR PENDING */}
+    {event.status === "PENDING" && (
+        <>
+            <button
+                onClick={() => onReject(event.id)}
+                disabled={isProcessing}
+                className="
+                    flex
+                    items-center
+                    gap-2
+                    rounded-xl
+                    border
+                    border-red-500/20
+                    bg-red-500/[0.06]
+                    px-4
+                    py-2.5
+                    text-sm
+                    font-medium
+                    text-red-400
+                    transition-all
+                    hover:border-red-500/30
+                    hover:bg-red-500/10
+                    disabled:cursor-not-allowed
+                    disabled:opacity-40
+                "
+            >
+                <X size={16} />
+                Reject
+            </button>
 
-                    </div>
 
+            <button
+                onClick={() => onApprove(event.id)}
+                disabled={isProcessing}
+                className="
+                    flex
+                    items-center
+                    gap-2
+                    rounded-xl
+                    bg-[#F4C542]
+                    px-5
+                    py-2.5
+                    text-sm
+                    font-semibold
+                    text-black
+                    transition-all
+                    hover:bg-[#FFD95A]
+                    hover:shadow-[0_8px_30px_rgba(244,197,66,.18)]
+                    disabled:cursor-not-allowed
+                    disabled:opacity-40
+                "
+            >
+                <Check size={16} />
+                Approve
+            </button>
+        </>
+    )}
+
+
+    {/* TAKE DOWN FOR EVERYTHING EXCEPT TAKEN DOWN */}
+    {event.status !== "TAKEN_DOWN" && (
+        <button
+            onClick={() => onTakeDown(event.id)}
+            disabled={isProcessing}
+            className="
+                flex
+                items-center
+                gap-2
+                rounded-xl
+                border
+                border-orange-500/20
+                bg-orange-500/[0.06]
+                px-4
+                py-2.5
+                text-sm
+                font-medium
+                text-orange-400
+                transition-all
+                hover:border-orange-500/30
+                hover:bg-orange-500/10
+                disabled:cursor-not-allowed
+                disabled:opacity-40
+            "
+        >
+            <Ban size={16} />
+            Take Down
+        </button>
+    )}
+
+</div>
                 </div>
 
             </div>
